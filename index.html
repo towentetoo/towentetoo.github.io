@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>towentetoo</title>
+<style>
+  :root {
+    --paper: #f6f4ef;
+    --ink: #1f1d1a;
+    --line: #d8d3c7;
+    --accent: #7a5c3e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.5;
+  }
+  header {
+    padding: 3rem 1.5rem 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 0.3rem;
+    font-weight: 400;
+  }
+  header p {
+    margin: 0;
+    color: #6b665c;
+    font-size: 0.95rem;
+  }
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    border-bottom: 1px solid var(--line);
+    padding: 1.1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  li:last-child { border-bottom: none; }
+  .title {
+    font-size: 1.05rem;
+  }
+  .links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
+  .links a:hover { text-decoration: underline; }
+  footer {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: #9a9488;
+    font-size: 0.85rem;
+    font-family: -apple-system, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>towentetoo</h1>
+  <p>Презентации и доклады</p>
+</header>
+
+<main>
+  <ul>
+    <li>
+      <span class="title">Эрзац-продукты — перспективы и тенденции в производстве продуктов-заменителей</span>
+      <span class="links">
+        <a href="erzac-produkty.pdf" target="_blank">открыть</a>
+        <a href="erzac-produkty.pdf" download>скачать</a>
+      </span>
+    </li>
+    <li>
+      <span class="title">Рационализация потребления — новый тренд на рынке продовольствия</span>
+      <span class="links">
+        <a href="racionalizaciya-potrebleniya.pdf" target="_blank">открыть</a>
+        <a href="racionalizaciya-potrebleniya.pdf" download>скачать</a>
+      </span>
+    </li>
+  </ul>
+</main>
+
+<footer>
+  Обновлено вручную · файлы лежат в этом же репозитории
+</footer>
+
+</body>
+</html>
