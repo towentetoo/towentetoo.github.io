@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Роль информации на стратегическом уровне управления</title>
+<style>
+  :root{
+    --cherry:#990011; --cherry-dk:#72000C; --card:#B3212F; --navy:#2F3C7E;
+    --gold:#E8A33D; --offwhite:#FCF6F5; --muted:#E7B8BC;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{height:100%; scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0; height:100%; min-height:100vh; background:var(--cherry);
+    font-family:'Bookman Old Style',Georgia,serif; color:var(--offwhite);
+    overflow:hidden;
+  }
+  .deck{ position:relative; width:100%; height:100vh; height:100dvh; overflow:hidden; }
+  .slide{ position:absolute; inset:0; display:none; flex-direction:column; background:var(--cherry);
+    padding:6vh 5vw 10vh 5vw; opacity:0; transition:opacity .35s ease; }
+  .slide.active{ display:flex; opacity:1; }
+
+  .kicker{ font-family:Arial,Helvetica,sans-serif; font-size:clamp(11px,1.3vw,14px); font-weight:700; letter-spacing:3px; color:var(--gold); margin:0 0 10px 0; }
+  h1{ font-family:'Bookman Old Style',Georgia,serif; font-weight:700; font-size:clamp(22px,3.2vw,32px); margin:0 0 12px 0; line-height:1.2; color:var(--offwhite); }
+  .lead{ font-family:Arial,sans-serif; font-size:clamp(13.5px,1.5vw,15.5px); line-height:1.5; color:var(--muted); max-width:560px; }
+  .note{ font-family:Arial,sans-serif; font-style:italic; font-size:clamp(12px,1.2vw,13px); color:var(--gold); max-width:560px; margin-top:16px; }
+  .chevron-rule{ width:44px; height:12px; background:var(--gold); clip-path:polygon(0 0,70% 0,100% 50%,70% 100%,0 100%,30% 50%); margin:6px 0 16px 0; }
+
+  /* Slide 1: intro + pyramid */
+  .s1-grid{ display:flex; flex:1; gap:4vw; align-items:center; flex-wrap:wrap; }
+  .s1-text{ flex:1 1 360px; }
+  .pyramid-wrap{ flex:1 1 320px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; }
+  .lvl{ display:flex; align-items:center; justify-content:center; text-align:center; font-family:Arial,sans-serif; font-weight:700; font-size:clamp(10px,1.1vw,12.5px); border:2px solid var(--cherry); color:var(--cherry-dk); }
+  .lvl1{ width:44%; padding:16px 6px; background:var(--gold); clip-path:polygon(12% 0,88% 0,100% 100%,0% 100%); }
+  .lvl2{ width:66%; padding:16px 6px; background:#C97E3A; color:var(--offwhite); clip-path:polygon(10% 0,90% 0,100% 100%,0% 100%); margin-top:-6px; }
+  .lvl3{ width:90%; padding:16px 6px; background:var(--navy); color:var(--offwhite); clip-path:polygon(8% 0,92% 0,100% 100%,0% 100%); margin-top:-6px; }
+  .arrow-up{ width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-bottom:28px solid var(--offwhite); margin-top:18px; }
+  .info-label{ font-family:Arial,sans-serif; font-weight:700; font-size:11px; letter-spacing:2px; color:var(--offwhite); margin-top:10px; }
+
+  /* Staircase pair slides */
+  .stair{ position:relative; flex:1; margin-top:1.5vh; }
+  .scard{ position:absolute; width:52%; min-height:38%; background:var(--card); border:1px solid var(--gold); border-radius:2px; box-shadow:-10px -10px 0 var(--gold); padding:clamp(16px,2.2vw,26px); display:flex; flex-direction:column; }
+  .scard.pos0{ left:0; top:2%; }
+  .scard.pos1{ left:48%; top:52%; }
+  .shex{ width:64px; height:64px; background:var(--gold); clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); display:flex; align-items:center; justify-content:center; font-family:'Bookman Old Style',serif; font-weight:700; font-size:22px; color:var(--cherry-dk); flex-shrink:0; position:absolute; left:clamp(16px,2.2vw,26px); top:clamp(16px,2.2vw,26px); }
+  .scard h2{ font-family:'Bookman Old Style',serif; font-size:clamp(16px,1.9vw,20px); margin:2px 0 0 92px; color:var(--offwhite); min-height:52px; display:flex; align-items:center; }
+  .scard p{ font-family:Arial,sans-serif; font-size:clamp(12px,1.25vw,13.5px); color:var(--muted); line-height:1.45; margin:14px 0 0 0; }
+  .conn{ position:absolute; left:47%; top:46%; width:42px; height:26px; background:var(--gold); clip-path:polygon(0 0,60% 0,100% 50%,60% 100%,0 100%,25% 50%); transform:rotate(45deg); }
+
+  /* Single feature slide */
+  .feat-wrap{ display:flex; gap:5%; align-items:flex-start; margin-top:1vh; flex-wrap:wrap; }
+  .feat-hex{ width:160px; height:160px; background:var(--gold); clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); display:flex; align-items:center; justify-content:center; font-family:'Bookman Old Style',serif; font-weight:700; font-size:64px; color:var(--cherry-dk); flex-shrink:0; }
+  .feat-text{ flex:1 1 420px; }
+  .feat-text h2{ font-family:'Bookman Old Style',serif; font-size:clamp(20px,2.6vw,28px); margin:6px 0 12px 0; color:var(--offwhite); }
+  .feat-text p{ font-family:Arial,sans-serif; font-size:clamp(13px,1.5vw,15px); color:var(--muted); line-height:1.55; margin:0; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 0 0; }
+  .chip{ background:var(--card); border:1px solid var(--gold); border-radius:999px; padding:10px 18px; font-family:Arial,sans-serif; font-weight:700; font-size:clamp(11px,1.1vw,12.5px); color:var(--offwhite); }
+  .feat-bottom{ margin-top:auto; font-family:Arial,sans-serif; font-style:italic; font-size:clamp(13px,1.3vw,14px); color:var(--gold); }
+
+  /* Summary hex grid */
+  .hexgrid{ position:relative; flex:1; margin-top:1vh; }
+  .hcell{ position:absolute; width:16%; padding-top:16%; }
+  .hcell-inner{ position:absolute; inset:0; clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:8%; }
+  .hcell .idx{ font-family:'Bookman Old Style',serif; font-weight:700; font-size:clamp(12px,1.3vw,15px); }
+  .hcell .lbl{ font-family:Arial,sans-serif; font-weight:700; font-size:clamp(9.5px,1vw,11px); line-height:1.2; margin-top:4px; }
+  .final-note{ font-family:Arial,sans-serif; font-style:italic; font-size:clamp(12.5px,1.3vw,14px); color:var(--gold); text-align:center; max-width:900px; margin:2vh auto 0 auto; }
+
+  /* Nav */
+  .navbar{ position:fixed; left:0; right:0; bottom:0; height:8vh; min-height:52px; display:flex; align-items:center; justify-content:space-between; padding:0 4vw calc(env(safe-area-inset-bottom,0px)); z-index:10; }
+  .nav-btn{ font-family:Arial,sans-serif; font-size:14px; font-weight:700; background:rgba(255,255,255,.10); color:var(--offwhite); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:10px 18px; cursor:pointer; }
+  .nav-btn:disabled{ opacity:.3; cursor:default; }
+  .dots{ display:flex; gap:8px; }
+  .dot{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.3); cursor:pointer; }
+  .dot.active{ background:var(--gold); }
+  .counter{ position:fixed; right:4vw; top:calc(3vh + env(safe-area-inset-top,0px)); font-family:Arial,sans-serif; font-size:12px; color:rgba(255,255,255,.55); z-index:10; }
+
+  @media (max-width:640px){
+    .slide{ padding:5vh 5vw 12vh 5vw; }
+    .scard{ width:100%; min-height:auto; position:relative; left:0 !important; top:0 !important; margin-bottom:14px; box-shadow:-6px -6px 0 var(--gold); }
+    .stair{ display:flex; flex-direction:column; }
+    .conn{ display:none; }
+    .hexgrid{ display:flex; flex-wrap:wrap; gap:10px; position:relative; }
+    .hcell{ position:relative; width:46%; padding-top:46%; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <section class="slide active">
+    <div class="kicker">СТРАТЕГИЧЕСКОЕ УПРАВЛЕНИЕ</div>
+    <div class="s1-grid">
+      <div class="s1-text">
+        <h1>Роль информации на стратегическом уровне</h1>
+        <div class="chevron-rule"></div>
+        <p class="lead">Стратегический уровень требует информации иного характера, чем оперативный: обобщённой, направленной в будущее и охватывающей факторы за пределами предприятия.</p>
+        <p class="note">От качества информационного обеспечения зависит обоснованность решений и устойчивость предприятия на рынке.</p>
+      </div>
+      <div class="pyramid-wrap">
+        <div class="lvl lvl1">СТРАТЕГИЧЕСКИЙ</div>
+        <div class="lvl lvl2">ТАКТИЧЕСКИЙ</div>
+        <div class="lvl lvl3">ОПЕРАТИВНЫЙ</div>
+        <div class="arrow-up"></div>
+        <div class="info-label">ИНФОРМАЦИЯ</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">ПРИЗНАКИ 1–2</div>
+    <div class="stair">
+      <div class="scard pos0"><div class="shex">1</div><h2>Анализ среды</h2><p>SWOT- и PEST-анализ, оценка конкурентов и ресурсов строятся целиком на собранной информации о рынке.</p></div>
+      <div class="conn"></div>
+      <div class="scard pos1"><div class="shex">2</div><h2>Формирование стратегии</h2><p>Полнота и точность данных о рынках и технологиях снижают риск выбора решения, не отвечающего реальным условиям.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">ПРИЗНАКИ 3–4</div>
+    <div class="stair">
+      <div class="scard pos0"><div class="shex">3</div><h2>Прогнозирование</h2><p>Статистика, отраслевые тенденции и макропоказатели снижают неопределённость и позволяют строить сценарии развития.</p></div>
+      <div class="conn"></div>
+      <div class="scard pos1"><div class="shex">4</div><h2>Конкурентное преимущество</h2><p>Своевременные данные о конкурентах и рынке позволяют действовать на опережение и использовать открывающиеся возможности.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">ПРИЗНАКИ 5–6</div>
+    <div class="stair">
+      <div class="scard pos0"><div class="shex">5</div><h2>Контроль и корректировка</h2><p>Мониторинг хода реализации стратегии и сравнение факта с планом позволяют своевременно вносить изменения.</p></div>
+      <div class="conn"></div>
+      <div class="scard pos1"><div class="shex">6</div><h2>Согласование уровней</h2><p>Информация связывает стратегические цели с текущей работой подразделений в обоих направлениях.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">ПРИЗНАК 7</div>
+    <div class="feat-wrap">
+      <div class="feat-hex">7</div>
+      <div class="feat-text">
+        <h2>Снижение стратегических рисков</h2>
+        <p>Долгосрочные решения — выход на новый рынок, крупные инвестиции, смена технологии — реализуют свои последствия не сразу и потому особенно рискованны.</p>
+        <div class="chips">
+          <div class="chip">Рыночная конъюнктура</div>
+          <div class="chip">Регуляторные изменения</div>
+          <div class="chip">Финансовое состояние партнёров</div>
+          <div class="chip">Отраслевые тенденции</div>
+        </div>
+      </div>
+    </div>
+    <p class="feat-bottom">Заблаговременное выявление источников риска повышает вероятность достижения стратегических целей.</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">ИТОГ</div>
+    <h1>Семь граней роли информации в стратегии</h1>
+    <div class="hexgrid" id="hexgrid"></div>
+    <p class="final-note">Информация — не вспомогательный, а важнейший ресурс стратегического управления предприятием.</p>
+  </section>
+
+</div>
+
+<div class="counter" id="counter">1 / 6</div>
+<div class="navbar">
+  <button class="nav-btn" id="prevBtn">← Назад</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn">Далее →</button>
+</div>
+
+<script>
+  // Hex grid summary (desktop: two staggered rows of 4 and 3)
+  const items = ["Анализ среды","Формирование стратегии","Прогнозирование","Конкурентное преимущество","Контроль и корректировка","Согласование уровней","Снижение рисков"];
+  const hexgrid = document.getElementById('hexgrid');
+  const isMobile = window.matchMedia('(max-width:640px)').matches;
+  if (isMobile) {
+    items.forEach((label, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'hcell';
+      const fill = i % 2 === 0 ? 'var(--gold)' : 'var(--card)';
+      const tc = i % 2 === 0 ? 'var(--cherry-dk)' : 'var(--offwhite)';
+      cell.innerHTML = '<div class="hcell-inner" style="background:' + fill + ';color:' + tc + '"><div class="idx">' + (i+1) + '</div><div class="lbl">' + label + '</div></div>';
+      hexgrid.appendChild(cell);
+    });
+  } else {
+    const d = 15.5, gapX = 1.3;
+    const row1 = items.slice(0,4), row2 = items.slice(4,7);
+    const row1X = 2, row1Y = 6;
+    row1.forEach((label, i) => {
+      const x = row1X + i * (d + gapX);
+      const cell = document.createElement('div');
+      cell.className = 'hcell';
+      cell.style.left = x + '%'; cell.style.top = row1Y + '%'; cell.style.width = d + '%'; cell.style.paddingTop = d + '%';
+      const fill = i % 2 === 0 ? 'var(--gold)' : 'var(--card)';
+      const tc = i % 2 === 0 ? 'var(--cherry-dk)' : 'var(--offwhite)';
+      cell.innerHTML = '<div class="hcell-inner" style="background:' + fill + ';color:' + tc + '"><div class="idx">' + (i+1) + '</div><div class="lbl">' + label + '</div></div>';
+      hexgrid.appendChild(cell);
+    });
+    const row2X = row1X + (d + gapX) / 2, row2Y = row1Y + d * 0.78;
+    row2.forEach((label, i) => {
+      const idx = i + 4;
+      const x = row2X + i * (d + gapX);
+      const cell = document.createElement('div');
+      cell.className = 'hcell';
+      cell.style.left = x + '%'; cell.style.top = row2Y + '%'; cell.style.width = d + '%'; cell.style.paddingTop = d + '%';
+      const fill = idx % 2 === 0 ? 'var(--gold)' : 'var(--card)';
+      const tc = idx % 2 === 0 ? 'var(--cherry-dk)' : 'var(--offwhite)';
+      cell.innerHTML = '<div class="hcell-inner" style="background:' + fill + ';color:' + tc + '"><div class="idx">' + (idx+1) + '</div><div class="lbl">' + label + '</div></div>';
+      hexgrid.appendChild(cell);
+    });
+  }
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  const counter = document.getElementById('counter');
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  function go(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+    counter.textContent = (idx + 1) + ' / ' + slides.length;
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === slides.length - 1;
+  }
+  prevBtn.addEventListener('click', () => go(idx - 1));
+  nextBtn.addEventListener('click', () => go(idx + 1));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') go(idx + 1);
+    if (e.key === 'ArrowLeft') go(idx - 1);
+  });
+  let touchX = null;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (dx > 50) go(idx - 1);
+    if (dx < -50) go(idx + 1);
+    touchX = null;
+  });
+  go(0);
+</script>
+</body>
+</html>
