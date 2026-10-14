@@ -1,0 +1,23 @@
+# Заливка игр T&C STUDIO на хостинг VK (VK + Одноклассники).
+# Ключи лежат только в Settings → Secrets → Actions (VK_KOTOMERGE и т.д.), в коде их нет.
+name: VK deploy
+on:
+  push:
+    branches: [main]
+    paths: ['vk-deploy/**']
+  workflow_dispatch:
+jobs:
+  kotomerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Deploy Котомерж
+        working-directory: vk-deploy/kotomerge
+        env:
+          MINI_APPS_ACCESS_TOKEN: ${{ secrets.VK_KOTOMERGE }}
+          MINI_APPS_ENVIRONMENT: production
+          CI_URLS: 'true'
+        run: npx --yes @vkontakte/vk-miniapps-deploy@1.0.3

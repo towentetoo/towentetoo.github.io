@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Котомерж</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script>window.__TC_PLATFORM="vk"</script>
+<script src="vk-bridge.min.js"></script>
+<script src="platform.js"></script>
+</head>
+<body oncontextmenu="return false">
+<canvas id="c" aria-label="Котомерж"></canvas>
+
+<div id="col">
+  <div class="hud">
+    <div class="score"><small data-t="score">Счёт</small><span id="score">0</span></div>
+    <div class="hud-r">
+      <div class="coins"><small data-t="coins">Монеты</small><b id="coins">0</b></div>
+      <button class="ico" id="bPause" aria-label="Пауза"><i class="pz"></i></button>
+    </div>
+  </div>
+  <div class="btns">
+    <button class="btn ghost" id="bBomb"><span aria-hidden="true">🐾</span> <span data-t="paw">Лапка</span> <span class="c">30</span></button>
+    <button class="btn ghost" id="bShake"><span aria-hidden="true">🌀</span> <span data-t="shake">Встряска</span> <span class="c">20</span></button>
+  </div>
+</div>
+
+<div class="ov" id="ovBoot">
+  <div class="panel"><div class="spinner" aria-hidden="true"></div><p id="bootMsg"></p>
+  <button class="btn hide" id="bRetry">Повторить</button></div>
+</div>
+
+<div class="ov hide" id="ovStart">
+  <div class="panel">
+    <canvas class="hero" id="hero" width="240" height="240"></canvas>
+    <h1>Котомерж</h1>
+    <p data-t="intro"></p>
+    <p class="hint" data-t="controls"></p>
+    <div class="lvl"><span id="lvlName"></span><div class="lbar"><i id="lvlBar"></i></div><small id="lvlXp"></small></div>
+    <button class="btn" id="bPlay" data-t="play">Играть</button>
+    <div class="row row3">
+      <button class="btn ghost" id="bGift"><span aria-hidden="true">🎁</span> <span data-t="gift">Подарок</span><i class="dot hide" id="dGift"></i></button>
+      <button class="btn ghost" id="bQuests"><span aria-hidden="true">📋</span> <span data-t="quests">Задания</span><i class="dot hide" id="dQuests"></i></button>
+      <button class="btn ghost" id="bBoxes"><span aria-hidden="true">📦</span> <span data-t="boxes">Коробки</span><i class="dot hide" id="dBoxes"></i></button>
+    </div>
+    <div class="row">
+      <button class="btn ghost" id="bColl" data-t="collection">Коллекция</button>
+      <button class="btn ghost" id="bBoard" data-t="board">Рейтинг</button>
+    </div>
+    <button class="link" id="bLegal" data-t="legalBtn"></button>
+    <div class="age0">T&amp;C STUDIO · 0+</div>
+  </div>
+</div>
+
+<div class="ov hide" id="ovPause">
+  <div class="panel">
+    <h2 data-t="pause">Пауза</h2>
+    <button class="btn" id="bResume" data-t="resume">Продолжить</button>
+    <div class="row">
+      <button class="btn ghost" id="bSfx"></button>
+      <button class="btn ghost" id="bMus"></button>
+    </div>
+    <button class="btn ghost" id="bColl3" data-t="collection">Коллекция</button>
+    <button class="btn ghost" id="bMenu" data-t="menu">В меню</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovOver">
+  <div class="panel">
+    <h2 data-t="full">Коробка переполнена</h2>
+    <div class="big" id="oScore">0</div>
+    <p><span data-t="best">Рекорд</span>: <b id="oBest">0</b><br><span id="oNew" class="accent"></span></p>
+    <button class="btn" id="bCont"><span aria-hidden="true">📺</span> <span data-t="cont"></span></button>
+    <button class="btn ghost" id="bAgain" data-t="again">Ещё раз</button>
+    <button class="btn ghost" id="bMenu2" data-t="menu">В меню</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovCoins">
+  <div class="panel">
+    <h2 data-t="noCoins">Не хватает монет</h2>
+    <p data-t="coinsOffer"></p>
+    <button class="btn" id="bAdCoins"><span aria-hidden="true">📺</span> <span data-t="watchCoins"></span></button>
+    <button class="btn ghost" id="bCoinsClose" data-t="cancel">Отмена</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovColl">
+  <div class="panel wide">
+    <h2 data-t="collection">Коллекция</h2>
+    <p id="collCount"></p>
+    <div class="grid" id="grid"></div>
+    <button class="btn" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovBoard">
+  <div class="panel wide">
+    <h2 data-t="board">Рейтинг</h2>
+    <ol class="board" id="boardList"></ol>
+    <p id="boardMsg"></p>
+    <button class="btn ghost hide" id="bAuth" data-t="login">Войти</button>
+    <button class="btn" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovDaily">
+  <div class="panel wide">
+    <h2 data-t="dailyT">Ежедневный подарок</h2>
+    <p data-t="dailyX"></p>
+    <div class="dgrid" id="dailyGrid"></div>
+    <p class="accent" id="dailyStreak"></p>
+    <button class="btn" id="bDailyTake" data-t="take">Забрать</button>
+    <button class="btn gold" id="bDailyAd"><span aria-hidden="true">📺</span> <span data-t="takeX2"></span></button>
+    <p id="dailyNext"></p>
+    <button class="btn ghost" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovQuests">
+  <div class="panel wide">
+    <h2 data-t="questsT">Задания дня</h2>
+    <p class="hint" data-t="questsX"></p>
+    <div class="qlist" id="questList"></div>
+    <button class="btn gold" id="bQBonus"></button>
+    <button class="btn ghost" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovBoxes">
+  <div class="panel wide">
+    <h2 data-t="boxesT">Коробки</h2>
+    <div class="bgrid" id="boxGrid"></div>
+    <button class="btn ghost" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovLegal">
+  <div class="panel wide">
+    <div class="legal" id="legalText"></div>
+    <button class="btn" data-back data-t="back">Назад</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="game.js"></script>
+</body>
+</html>
