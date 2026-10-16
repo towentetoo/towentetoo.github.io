@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Уютный маджонг</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script>window.__TC_PLATFORM="vk"</script>
+<script src="vk-bridge.min.js"></script>
+<script src="platform.js"></script>
+</head>
+<body oncontextmenu="return false">
+<canvas id="c"></canvas>
+<div class="hud">
+  <div class="lvl"><small data-t="level">Уровень</small><b id="lvl">1</b></div>
+  <div class="left"><small data-t="tiles">Плиток</small><b id="left">0</b></div>
+  <div class="tools">
+    <button class="ico" id="bHint" aria-label="Подсказка">💡<span class="cnt" id="nHint">3</span></button>
+    <button class="ico" id="bShuffle" aria-label="Перемешать">🔀<span class="cnt" id="nShuf">2</span></button>
+    <button class="ico" id="bPause" aria-label="Пауза"><i class="pz"></i></button>
+  </div>
+</div>
+
+<div class="ov menu" id="ovBoot">
+  <div class="panel"><div class="spinner"></div><p id="bootMsg"></p><button class="btn hide" id="bRetry"></button></div>
+</div>
+
+<div class="ov menu hide" id="ovMenu">
+  <div class="panel">
+    <button class="ico snd" id="bSound" aria-label="Звук">🔊</button>
+    <h1 id="title">Уютный<br>маджонг</h1>
+    <p class="how" data-t="how"></p>
+    <button class="btn" id="bPlay"></button>
+    <div class="row">
+      <button class="btn ghost" id="bDacha" data-t="dacha"></button>
+      <button class="btn ghost" id="bBoard" data-t="board"></button>
+    </div>
+    <p class="meta" id="menuMeta"></p>
+    <button class="link" id="bLegal" data-t="legalBtn"></button>
+    <div class="studio">T&amp;C STUDIO · <b class="age">0+</b></div>
+  </div>
+</div>
+
+<div class="ov hide" id="ovPause">
+  <div class="panel">
+    <h2 data-t="pause"></h2>
+    <button class="btn" id="bResume" data-t="resume"></button>
+    <div class="row">
+      <button class="btn ghost" id="bSfx"></button>
+      <button class="btn ghost" id="bMus"></button>
+    </div>
+    <button class="btn ghost" id="bMenu" data-t="menu"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovWin">
+  <div class="panel">
+    <h2 data-t="win"></h2>
+    <div class="stars" id="stars"></div>
+    <p id="winText"></p>
+    <button class="btn" id="bNext" data-t="next"></button>
+    <button class="btn gold" id="bDouble"><span>📺</span> <span data-t="double"></span></button>
+    <button class="btn ghost" id="bWinDacha" data-t="toDacha"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovOffer">
+  <div class="panel">
+    <h2 id="offerTitle"></h2>
+    <p id="offerText"></p>
+    <button class="btn gold" id="bOfferAd"><span>📺</span> <span id="offerBtn"></span></button>
+    <button class="btn ghost" data-back data-t="cancel"></button>
+  </div>
+</div>
+
+<div class="ov menu hide" id="ovDacha">
+  <div class="panel wide dacha">
+    <div class="dhead"><h2 id="roomTitle"></h2><div class="starbox">★ <b id="dStars">0</b></div></div>
+    <div class="rooms" id="roomTabs"></div>
+    <canvas id="scene" width="720" height="440"></canvas>
+    <div class="items" id="items"></div>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovBoard">
+  <div class="panel wide">
+    <h2 data-t="board"></h2>
+    <ol class="board" id="boardList"></ol>
+    <p id="boardMsg"></p>
+    <button class="btn ghost hide" id="bAuth" data-t="login"></button>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovLegal">
+  <div class="panel wide">
+    <div class="legal" id="legalText"></div>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="icons.js"></script>
+<script src="music.js"></script>
+<script src="kitchen.js"></script>
+<script src="rooms.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
