@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Линии: Шарики</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script>window.__TC_PLATFORM="vk"</script>
+<script src="vk-bridge.min.js"></script>
+<script src="platform.js"></script>
+</head>
+<body oncontextmenu="return false">
+<canvas id="c"></canvas>
+<div class="hud" id="hud">
+  <div class="box"><small data-t="score">Очки</small><b id="score">0</b></div>
+  <div class="box nextBox"><small data-t="next">Дальше</small><div class="nextBalls" id="nextBalls"><canvas width="64" height="64"></canvas><canvas width="64" height="64"></canvas><canvas width="64" height="64"></canvas></div></div>
+  <div class="box"><small data-t="best">Рекорд</small><b id="best">0</b></div>
+</div>
+<div class="tools" id="tools">
+  <button class="ico" id="bUndo" aria-label="Отмена хода">↶<span class="cnt" id="nUndo">3</span></button>
+  <button class="ico" id="bPause" aria-label="Пауза"><i class="pz"></i></button>
+</div>
+
+<div class="ov menu" id="ovBoot">
+  <div class="panel"><div class="spinner"></div><p id="bootMsg"></p><button class="btn hide" id="bRetry"></button></div>
+</div>
+
+<div class="ov menu hide" id="ovMenu">
+  <div class="panel">
+    <button class="ico snd" id="bSound" aria-label="Звук">🔊</button>
+    <canvas class="hero" id="hero" width="600" height="200"></canvas>
+    <h1 id="title">Линии</h1>
+    <div class="sub" data-t="sub"></div>
+    <p class="how" data-t="how"></p>
+    <button class="btn" id="bPlay"></button>
+    <button class="btn ghost hide" id="bNew" data-t="newGame"></button>
+    <div class="row">
+      <button class="btn ghost" id="bThemes" data-t="themes"></button>
+      <button class="btn ghost" id="bBoard" data-t="board"></button>
+    </div>
+    <p class="meta" id="menuMeta"></p>
+    <button class="link" id="bLegal" data-t="legalBtn"></button>
+    <div class="studio">T&amp;C STUDIO · <b class="age">0+</b></div>
+  </div>
+</div>
+
+<div class="ov hide" id="ovPause">
+  <div class="panel">
+    <h2 data-t="pause"></h2>
+    <button class="btn" id="bResume" data-t="resume"></button>
+    <div class="row">
+      <button class="btn ghost" id="bSfx"></button>
+      <button class="btn ghost" id="bMus"></button>
+    </div>
+    <button class="btn ghost" id="bRestart" data-t="newGame"></button>
+    <button class="btn ghost" id="bMenu" data-t="menu"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovOver">
+  <div class="panel">
+    <h2 data-t="over"></h2>
+    <div class="newBest hide" id="newBest" data-t="newBest"></div>
+    <div class="big" id="overScore">0</div>
+    <p id="overText"></p>
+    <button class="btn gold" id="bRevive"><span>📺</span> <span data-t="revive"></span></button>
+    <button class="btn" id="bAgain" data-t="newGame"></button>
+    <button class="btn ghost" id="bOverMenu" data-t="menu"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovOffer">
+  <div class="panel">
+    <h2 data-t="undoT"></h2>
+    <p data-t="undoX"></p>
+    <button class="btn gold" id="bOfferAd"><span>📺</span> <span data-t="undoB"></span></button>
+    <button class="btn ghost" data-back data-t="cancel"></button>
+  </div>
+</div>
+
+<div class="ov menu hide" id="ovThemes">
+  <div class="panel wide">
+    <h2 data-t="themes"></h2>
+    <p class="meta" id="themesMeta"></p>
+    <div class="themes" id="themeList"></div>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovBoard">
+  <div class="panel wide">
+    <h2 data-t="board"></h2>
+    <ol class="board" id="boardList"></ol>
+    <p id="boardMsg"></p>
+    <button class="btn ghost hide" id="bAuth" data-t="login"></button>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="ov hide" id="ovLegal">
+  <div class="panel wide">
+    <div class="legal" id="legalText"></div>
+    <button class="btn" data-back data-t="back"></button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="balls.js"></script>
+<script src="music.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

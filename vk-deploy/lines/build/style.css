@@ -1,0 +1,78 @@
+/* Линии — оформление: тёплая бумага на глубоком бирюзовом фоне. Шрифт Rubik (OFL). */
+@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2212}
+@font-face{font-family:Rubik;font-weight:800;font-display:swap;src:url(fonts/rubik-cyrillic-800-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:Rubik;font-weight:800;font-display:swap;src:url(fonts/rubik-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2212}
+:root{--ink:#3a2c1e;--paper:#fffaf0;--paper2:#f2e6cf;--teal:#1d5a6b;--teal2:#0f2f3d;--green:#3fae3a;--green2:#2a7d26;--gold:#ffc24a;--gold2:#e08e12;--red:#e8392d}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--teal2);font-family:Rubik,system-ui,sans-serif;font-weight:500;color:var(--ink);
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;overscroll-behavior:none}
+#c{position:fixed;inset:0;display:block}
+.hide{display:none!important}
+
+/* HUD */
+.hud{position:fixed;left:0;right:0;top:0;display:flex;gap:8px;align-items:stretch;justify-content:center;pointer-events:none;
+  padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 6px max(10px,env(safe-area-inset-left))}
+.box{min-width:84px;background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:4px 12px;text-align:center;line-height:1.05;
+  display:flex;flex-direction:column;justify-content:center;box-shadow:0 4px 0 var(--ink)}
+.box small{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.6}.box b{font-size:24px;font-weight:800}
+.nextBalls{display:flex;gap:3px;justify-content:center;margin-top:2px}.nextBalls canvas{width:26px;height:26px}
+
+/* кнопки-иконки */
+.tools{position:fixed;display:flex;gap:12px;z-index:2}
+.ico{position:relative;width:54px;height:54px;border:3px solid var(--ink);border-radius:16px;background:var(--paper);box-shadow:0 4px 0 var(--ink);font:800 26px Rubik,sans-serif;color:var(--ink);cursor:pointer}
+.ico:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.cnt{position:absolute;right:-9px;top:-9px;min-width:23px;height:23px;border-radius:12px;border:2px solid var(--ink);background:var(--red);color:#fff;font:800 12px/19px Rubik,sans-serif;padding:0 4px}
+.cnt.ad{background:#ffd23f;color:var(--ink)}
+.pz{display:inline-block;width:15px;height:19px;border-left:5px solid var(--ink);border-right:5px solid var(--ink);vertical-align:middle}
+.ico.snd{position:absolute;right:12px;top:12px;width:42px;height:42px;font-size:19px}
+
+/* окна */
+.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,30,40,.55);z-index:4}
+.ov.menu{background:radial-gradient(ellipse at 50% 30%,#2a7486,#0f2f3d 75%);z-index:5}
+.panel{position:relative;background:var(--paper);border:4px solid var(--ink);border-radius:26px;padding:22px 26px;text-align:center;box-shadow:0 8px 0 var(--ink),inset 0 0 0 6px var(--paper2);
+  min-width:280px;max-width:92vw;max-height:94vh;overflow:auto;animation:pop .35s cubic-bezier(.3,1.6,.5,1)}
+.panel.wide{width:min(540px,94vw)}
+.panel h1{font-weight:800;font-size:54px;line-height:1;margin:6px 0 0;color:var(--red);letter-spacing:1px;text-shadow:0 4px 0 var(--ink)}
+.sub{font-weight:800;font-size:15px;letter-spacing:3px;text-transform:uppercase;opacity:.55;margin:6px 0 4px}
+.panel h2{font-weight:800;font-size:30px;margin-bottom:8px}
+.panel p{margin:6px 0 14px;font-size:16px;line-height:1.35}
+.how{max-width:330px;margin:8px auto 12px!important}
+.meta{font-size:14px!important;opacity:.7;margin:10px 0 0!important}
+.btn{display:block;width:100%;margin-top:10px;border:3px solid var(--ink);border-radius:18px;background:linear-gradient(#62c95c,var(--green));color:#fff;
+  font:800 21px Rubik,sans-serif;padding:11px 28px;box-shadow:0 5px 0 var(--ink);cursor:pointer;text-shadow:0 2px 0 rgba(30,20,10,.45)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.gold{background:linear-gradient(#ffd36e,var(--gold));color:var(--ink);text-shadow:none}
+.btn.ghost{background:linear-gradient(#fff,var(--paper2));color:var(--ink);text-shadow:none}
+.btn:focus-visible,.ico:focus-visible,.link:focus-visible{outline:3px solid #ffd23f;outline-offset:3px}
+.row{display:flex;gap:10px}.row .btn{flex:1;font-size:16px;padding:11px 6px;white-space:nowrap}
+.link{background:none;border:0;color:#7a5a3a;text-decoration:underline;font:500 13px Rubik,sans-serif;margin-top:12px;cursor:pointer;min-height:32px}
+.studio{margin-top:6px;font:800 11px Rubik,sans-serif;letter-spacing:2px;opacity:.5}
+.hero{width:min(330px,74vw);height:auto;display:block;margin:0 auto}
+.big{font-weight:800;font-size:56px;line-height:1.1;color:var(--ink)}
+.newBest{display:inline-block;background:#ffd23f;border:3px solid var(--ink);border-radius:12px;padding:3px 12px;font-weight:800;font-size:16px;margin-bottom:4px;animation:pulse 1s ease-in-out infinite alternate}
+.spinner{width:44px;height:44px;border-radius:50%;border:6px solid var(--paper2);border-top-color:var(--green);margin:4px auto 12px;animation:spin 1s linear infinite}
+.board{list-style:none;text-align:left;margin:6px 0 10px}.board li{display:flex;gap:10px;padding:7px 10px;border-radius:10px}
+.board li:nth-child(odd){background:#f6ead3}.board li.me{background:#d6f0c8}
+.board .rk{width:28px;font-weight:800}.board .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.board .sc{font-weight:800}
+.legal{text-align:left;font-size:14px;line-height:1.4}.legal h3{margin:10px 0 6px;font-weight:800}.legal p{margin:0 0 8px;font-size:14px}
+
+/* оформление */
+.themes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:8px 0 4px}
+.th{border:3px solid var(--ink);border-radius:16px;background:#fff;padding:6px 6px 8px;cursor:pointer;font:800 15px Rubik,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:0 3px 0 var(--ink)}
+.th canvas{width:100%;height:auto;border-radius:10px}
+.th small{font-weight:500;font-size:12px;opacity:.75}
+.th.cur{background:#e3f7d4}.th.cur small{opacity:1;color:var(--green2);font-weight:800}
+.th.lock{opacity:.6;cursor:default;box-shadow:none}
+
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;border-radius:14px;
+  padding:10px 18px;transition:transform .25s;pointer-events:none;font-size:16px;font-weight:800;white-space:nowrap;z-index:6}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{to{transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.panel,.newBest{animation:none}.toast{transition:none}}
+@media (max-height:620px){ .hero{display:none} .panel{padding:14px 18px} .panel h1{font-size:40px} .how{display:none} .btn{padding:8px 18px;margin-top:7px;font-size:18px} .big{font-size:44px} }
+/* большой экран (ПК): крупнее HUD и кнопки */
+body.big .box{min-width:110px;padding:6px 16px;border-radius:16px}body.big .box small{font-size:13px}body.big .box b{font-size:32px}
+body.big .nextBalls canvas{width:34px;height:34px}body.big .ico{width:66px;height:66px;font-size:32px;border-radius:18px}
